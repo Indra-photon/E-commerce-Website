@@ -1,0 +1,13 @@
+inside the /Shopping site folder run the command
+To initiate the REACT project
+--> npm create vite@latest frontend -- --template react
+--> cd frontend
+--> npm install
+--> npm run dev
+
+## How to include tailwind css set up in the frontend folder
+--> npm install -D tailwindcss postcss autoprefixer
+--> npx tailwindcss init -p
+
+
+--> npm install react-router-dom

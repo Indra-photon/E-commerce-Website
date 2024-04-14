@@ -1,0 +1,10 @@
+-----------Folder descriptions------------
+models:
+data modelling, how to store data in database-- all these things will be stored here
+
+controllers:
+brain of the backend
+logic related code of the backend
+
+routes:
+organizing routes
