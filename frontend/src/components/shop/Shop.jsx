@@ -8,15 +8,12 @@ const fetchProducts = async () => {
   try {
       const res = await axios.get("http://localhost:2000/products");
       const data = res.data;
+      console.log(data)
       return data; // Assuming your data is in res.data
   } catch (error) {
       console.error("Error fetching products:", error);
   }
 };
-
-
-
-
 
 
 
