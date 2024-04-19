@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import {useState, useEffect} from 'react'
-import ProductCart from './ProductCart'
 
 const fetchCarts = async () => {
   try {
@@ -16,7 +15,7 @@ const fetchCarts = async () => {
 
 const deleteCarts = async () => {
   try {
-      const res = await axios.delete("http://localhost:2000/carts");
+      await axios.delete("http://localhost:2000/carts");
       return true;
   } catch (error) {
       console.error("Error in deleting carts:", error);
@@ -28,6 +27,7 @@ const deleteCarts = async () => {
 const Cart = () => {
 
   const [Id, setId] = useState([]);
+  const [totalPrice, settotalPrice] = useState(0);
 
   const assignId = async () => {
     const fetchedId = await fetchCarts()
@@ -40,6 +40,7 @@ const Cart = () => {
     assignId()
   }, []);
 
+
   const handleClearCart = async () => {
     const success = await deleteCarts();
     if (success) {
@@ -48,13 +49,31 @@ const Cart = () => {
     }
   };
 
+  const calculateTotal = () => {
+    let total = 0;
+    Id.forEach(product => {
+      // Parse price and quantity, remove commas, then calculate subtotal
+      const price = parseInt(product.price.replace(/,/g, ''), 10);
+      const quantity = parseInt(product.quantity, 10);
+      const subtotal = price * quantity;
+      total += subtotal;
+    });
+    return total;
+  };
+
+  useEffect (() => {        /* Two arguements: a callback function, an array (called dependency array) */
+    calculateTotal()
+  }, []);
+
   return (
-    <div className='flex-col bg-slate-300 h-screen w-full justify-center'>
+    <div className='flex-col bg-slate-300 h-full w-full justify-center'>
+
       <section className='flex justify-center'>
         <h1 className='text-3xl font-bold text-white'>Your Cart</h1>
       </section>
 
-      <div className='bg-white mt-8 rounded-lg shadow-lg'>
+      <div className='bg-white mt-8 rounded-lg shadow-lg mx-10'>
+        <div className = 'flex justify-end pr-3 pt-3 text-lg font-semibold'>Subtotal</div>
         <div className='p-4'>
           {Id.length > 0 ? (
             <div className='divide-y divide-gray-200'>
@@ -65,25 +84,16 @@ const Cart = () => {
                       <div>
                         <h2 className='text-lg font-semibold'>{product.title}</h2>
                         <p className='text-gray-600'>Price: ${product.price}</p>
+                        <p className='text-gray-600'>Quantity: {product.quantity}</p>
                       </div>
                     </div>
                     <div className='flex items-center'>
-                      <input
-                        type='number'
-                        min='1'
-                        className='border rounded-md px-2 py-1 mr-2 w-16 text-center'
-                        value={product.quantity}
-                        onChange={(e) => handleQuantityChange(e, product)}
-                      />
-                      <button
-                        className='text-red-500 font-semibold'
-                        onClick={() => handleRemoveProduct(product)}
-                      >
-                        Remove
-                      </button>
+                      
+                      <h1 className = 'text-lg font-semibold'>$ {parseInt(product.price.replace(/,/g, ''))*parseInt(product.quantity)} </h1>
                     </div>
                   </div>
                 </div>
+                
               ))}
             </div>
           ) : (
@@ -91,13 +101,13 @@ const Cart = () => {
           )}
         </div>
         <div className='p-4 bg-gray-100 flex justify-between items-center'>
-          <p className='text-lg font-semibold'>Total: $X.XX</p>
+          <p className='text-lg font-semibold'>Total: ${calculateTotal()} </p>
           <button className='bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600'>
             Checkout
           </button>
         </div>
       </div>
-      <div className = 'flex justify-end items-end p-5'><button onClick = {handleClearCart} className = 'text-xl p-1 bg-sky-400 rounded-xl border-2'> Clear cart </button></div>
+      <div className = 'flex justify-end items-end px-14 pt-5'><button onClick = {handleClearCart} className='bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600'> Clear cart </button></div>
 </div>
 
   

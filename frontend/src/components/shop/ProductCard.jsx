@@ -1,14 +1,14 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import axios from 'axios'
-import {useState, useEffect} from 'react'
 
 
 
 const ProductCard = ({title, price, imgURL}) =>{
 
   const fetchCarts = async ( ) => {
-    const res = await axios.post("http://localhost:2000/carts", {title, price});
+    const quantity = prompt ("How many items do you want to take ? ")
+    const res = await axios.post("http://localhost:2000/carts", {title, price, quantity});
     if (res.status === 201) {
       alert ("Product added to cart successfully")
     }

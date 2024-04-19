@@ -1,15 +1,14 @@
 import React from 'react'
-import axios from 'axios'
-import {useState, useEffect} from 'react'
 
 
-const ProductCart = ({title, price}) => {
+const ProductCart = ({title, price, quantity}) => {
     
   return (
     <div>
         <section className = 'flex gap-5'>
           <h1> {title} </h1>
           <h1> {price} </h1>
+          <h1> {quantity}</h1>
         </section>
     
       

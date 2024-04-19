@@ -22,7 +22,7 @@ const CreateProduct = () => {
   }
 
   return (
-    <form className='p-10 bg-sky-300 flex justify-center h-screen' onSubmit={handleSubmit(submitHandler)}>
+    <form className='p-10 bg-slate-300 flex justify-center h-screen' onSubmit={handleSubmit(submitHandler)}>
         <div className='m-5'>
             <label htmlFor='title' className='pr-5'>Title</label>
             <input 
