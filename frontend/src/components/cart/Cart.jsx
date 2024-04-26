@@ -6,6 +6,7 @@ const fetchCarts = async () => {
   try {
       const res = await axios.get("http://localhost:2000/carts");
       const data = res.data;
+      
       return data; // Assuming your data is in res.data
   } catch (error) {
       console.error("Error fetching carts:", error);
@@ -24,6 +25,7 @@ const deleteCarts = async () => {
 }; 
 
 
+
 const Cart = () => {
 
   const [Id, setId] = useState([]);
@@ -32,7 +34,7 @@ const Cart = () => {
   const assignId = async () => {
     const fetchedId = await fetchCarts()
     setId(fetchedId)
-    console.log(fetchedId)
+    //console.log(fetchedId)
   }
 
 
@@ -48,6 +50,13 @@ const Cart = () => {
       setId([]);
     }
   };
+
+  const deleteItems = async (id) => {
+    await axios.delete(`http://localhost:2000/carts/${id}`);
+    assignId()
+  };
+  
+  
 
   const calculateTotal = () => {
     let total = 0;
@@ -85,11 +94,13 @@ const Cart = () => {
                         <h2 className='text-lg font-semibold'>{product.title}</h2>
                         <p className='text-gray-600'>Price: ${product.price}</p>
                         <p className='text-gray-600'>Quantity: {product.quantity}</p>
+                        <button onClick = {() => deleteItems(product._id)} className='bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600'> Remove </button>
                       </div>
                     </div>
                     <div className='flex items-center'>
                       
                       <h1 className = 'text-lg font-semibold'>$ {parseInt(product.price.replace(/,/g, ''))*parseInt(product.quantity)} </h1>
+                      
                     </div>
                   </div>
                 </div>
@@ -107,7 +118,7 @@ const Cart = () => {
           </button>
         </div>
       </div>
-      <div className = 'flex justify-end items-end px-14 pt-5'><button onClick = {handleClearCart} className='bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600'> Clear cart </button></div>
+      <div className = 'flex justify-end items-end px-14 pt-5 pb-20'><button onClick = {handleClearCart} className='bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600'> Clear cart </button></div>
 </div>
 
   

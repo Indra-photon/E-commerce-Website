@@ -12,7 +12,7 @@ const ProductCard = ({title, price, imgURL}) =>{
     if (res.status === 201) {
       alert ("Product added to cart successfully")
     }
-    console.log(res.data)
+    console.log(res.data._id)
   };
 
 

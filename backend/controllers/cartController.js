@@ -36,3 +36,13 @@ exports.deleteCart = async(req,res) =>{                   // delete the database
         res.status(500).json({message: err.message});
     }
 }
+
+exports.deleteCartsingleitem = async(req,res) =>{                   // delete the database of a product
+    try{
+        await CartModel.findByIdAndDelete(req.params.id);
+        res.status(200).json({message: "Product deleted successfully!"});
+
+    }catch (err) {
+        res.status(500).json({message: err.message});
+    }
+}
