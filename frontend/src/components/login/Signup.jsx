@@ -2,6 +2,9 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
+
+// const saltRounds = 10;
+
 const userexist = async (email) => {
     try {
         const existingUser = await axios.get(`http://localhost:2000/user?email=${email}`);
@@ -14,7 +17,7 @@ const userexist = async (email) => {
 
 
 const Signup = () => {
-
+   
 
     const {
         handleSubmit,
@@ -25,11 +28,13 @@ const Signup = () => {
       const submitHandler = async ({email, password}) => {
 
             const existingUserData = await userexist(email);
-            console.log(existingUserData)
+            //console.log(existingUserData)
             if (existingUserData) {
                 alert("User with this email already exists");
                 return; // Stop further execution
             }
+
+
             
             const res = await axios.post("http://localhost:2000/users",{
                 email,

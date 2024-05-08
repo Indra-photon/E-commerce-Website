@@ -4,6 +4,22 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
 
+
+const loginexist = async ({email}) => {
+  try {
+      const existingUser = await axios.get(`http://localhost:2000/user?email=${email}`);
+      if (existingUser.data == null){
+        return {};
+      } else {
+        return existingUser.data;
+      }
+  } catch (error) {
+      console.error("Error:", error);
+      return {};
+  }
+}
+
+
 const Login = () => {
   
   const {
@@ -13,12 +29,11 @@ const Login = () => {
   } = useForm();
 
   const submitHandler = async ({ email, password}) => {
-    const res = await axios.post("http://localhost:2000/users",{
-        email,
-        password
-    });
-    if (res.status === 201) {
-        alert ("You have signed up successfully")
+    const UserData = await loginexist({email});
+    if (UserData != {} ){
+        const hashedPass = UserData.password;
+        const ans = await axios.post('http://localhost:2000/User', {password, hashedPass})
+        alert(ans.data['msg'])
         
     }
   }
