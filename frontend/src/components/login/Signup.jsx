@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 
 // const saltRounds = 10;
 
@@ -17,7 +17,10 @@ const userexist = async (email) => {
 
 
 const Signup = () => {
-   
+    const navigate = useNavigate();
+    function gotologin () {
+      navigate ("/login")
+    }
 
     const {
         handleSubmit,
@@ -43,7 +46,7 @@ const Signup = () => {
 
             if (res.status === 201) {
                 alert ("You have signed up successfully")
-                
+                gotologin()
             }
       }
     return (

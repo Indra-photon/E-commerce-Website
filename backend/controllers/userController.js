@@ -60,9 +60,10 @@ exports.checkUserpassword = async (req, res) =>{
             if (err) throw err
             if (data) {
                 // console.log(data)
-                return res.status(200).json({ msg: "Login success" })
+                return res.status(200).json(data)
+                // return res.status(200).json({ msg: "Login success" })
             } else {
-                return res.status(200).json({ msg: "Invalid credencial" })
+                return res.status(200).json(data)
             }
 
         })
