@@ -29,7 +29,7 @@ const Login = () => {
   // const id = 5;
   const navigate = useNavigate();
   function gotoshop (id) {
-    navigate ("/cart" , {state : {id : id}})
+    navigate ("/shop" , {state : {id : id}})
   }
 
   const [userStatus, setUser] = useState(false);
